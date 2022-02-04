@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { useNavigate } from 'react-router-dom'
 import {Button, 
     Grid, 
     Typography, 
@@ -11,8 +12,9 @@ import {Button,
 
 } from '@material-ui/core';
 import { Link } from "react-router-dom";
+import {withRouter} from './withRouter';
 
-export default class CreateRoomPage extends Component {
+class CreateRoomPage extends Component {
     defaultVotes = 2;
     
     constructor(props) {
@@ -47,7 +49,7 @@ export default class CreateRoomPage extends Component {
         };
         fetch('/api/create-room', requestOptions).then((response)=> 
             response.json()
-            ).then((data)=> console.log(data));
+            ).then((data)=> this.props.navigate("/room/" + data.code));
     }
 
     render() {
@@ -117,3 +119,4 @@ export default class CreateRoomPage extends Component {
         );
     }
 }
+export default withRouter(CreateRoomPage);
