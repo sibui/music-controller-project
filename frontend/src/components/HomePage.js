@@ -52,13 +52,18 @@ export default class HomePage extends Component {
         );
     }
 
-    renderHomeOrJoin() {
-        console.log("wsuP");     
+    renderHomeOrJoin() {     
         return this.state.roomCode ? (
             <Navigate to={`/room/${this.state.roomCode}`} />
           ) : (
             this.renderHomePage()
           );
+    }
+
+    clearRoomCode = (e) => {
+        this.setState({
+            roomCode: null
+        });
     }
 
     render() {
@@ -72,7 +77,10 @@ export default class HomePage extends Component {
 
                 <Route path='/join' element={<RoomJoinPage/>}/>
                 <Route path='/create' element={<CreateRoomPage/>}/>
-                <Route path='/room/:roomCode' element={<Room/>}/>
+                <Route 
+                    path='/room/:roomCode' 
+                    element={<Room {...this.props} roomCode={this.state.roomCode} leaveRoomCallBack={this.clearRoomCode}/>}
+                />
             </Routes>
         </Router>
         );
